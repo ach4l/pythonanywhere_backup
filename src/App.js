@@ -7,8 +7,8 @@ import 'typeface-roboto';
 // Screens
 import SelectSourceScreen from "./screens/SelectSourceScreen";
 // import RequestContentScreen from "./screens/RequestContentScreen";
-// import RequestsListScreen from "./screens/RequestsListScreen";
-// import AddRequestScreen from "./screens/AddRequestScreen";
+import RequestsListScreen from "./screens/RequestsListScreen";
+import AddRequestScreen from "./screens/AddRequestScreen";
 
 export default function App() {
 
@@ -22,9 +22,9 @@ export default function App() {
 
   const SCREENS = {
     SelectSource: { screen: SelectSourceScreen, title: "WebBackPack" },
-    // RequestsList: { screen: RequestsListScreen, title: source },
+    RequestsList: { screen: RequestsListScreen, title: source },
     // RequestContent: { screen: RequestContentScreen, title: "" },
-    // AddRequest: { screen: AddRequestScreen, title: "Add " + source }
+    AddRequest: { screen: AddRequestScreen, title: "Add " + source }
   }
 
   // Ask for information for saved requests whenever 

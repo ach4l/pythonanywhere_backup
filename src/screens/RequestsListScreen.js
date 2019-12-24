@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { View, StyleSheet } from "react-native";
 import WebContext from "../components/WebContext";
 import RequestDisplay from "../components/RequestDisplay";
 
@@ -17,15 +16,13 @@ export default function RequestsListScreen(props) {
     ));
 
   return (
-    <View>
+    <div>
       {reqElements}
-    </View>
+    </div>
   );
 
 }
 
 
-const styles = StyleSheet.create({
-
-});
+const styles = {};
 

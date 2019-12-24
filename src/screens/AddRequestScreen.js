@@ -1,8 +1,15 @@
 import React, { useState, useContext } from "react";
-import { View, TextInput, Switch, Text, StyleSheet, Button, Picker } from "react-native";
-import Colors from "../constants/Colors";
 import WebContext from "../components/WebContext";
-import * as ajax from "../ajax";
+
+// Material UI imports
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Switch from "@material-ui/core/Switch";
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 export default function AddRequestScreen(props) {
   const [query, setQuery] = useState("");
@@ -40,16 +47,23 @@ export default function AddRequestScreen(props) {
 
   if (context.source === "Youtube") {
     videoSwitch = (
-      <View style={styles.video}>
-        <Text
-          style={{ marginRight: "3%" }}
-        >
-          {video ? "Video & Audio" : "Only Audio"}</Text>
-        <Switch
-          value={video}
-          onValueChange={input => setVideo(input)}
+      <div style={styles.video}>
+        <FormControlLabel
+          labelPlacement="start"
+          label={video ? "Video & Audio" : "Only Audio"}
+          control={(
+            <Switch
+              checked={video}
+              onChange={() => setVideo(video => !video)}
+              value="video"
+              color="primary"
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+          )}
+
         />
-      </View>
+
+      </div>
     );
   }
 
@@ -57,49 +71,43 @@ export default function AddRequestScreen(props) {
   let levelSelect = null;
   if (context.source === "Wikitravel") {
     levelSelect = (
-      <View style={styles.levelSelect}>
-        <Text>Level: </Text>
-        <Picker
-          selectedValue={level}
-          onValueChange={value => setLevel(value)}
-          style={styles.levelPicker}
+      <FormControl>
+        <InputLabel id="demo-simple-select-label">Label</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={level}
+          onChange={e => setLevel(e.target.value)}
         >
-          <Picker.Item value="0" label="0" />
-          <Picker.Item value="1" label="1" />
-        </Picker>
-      </View>
+          <MenuItem value="0">0</MenuItem>
+          <MenuItem value="1">1</MenuItem>
+        </Select>
+      </FormControl>
     );
   }
 
   return (
-    <View style={styles.screen}>
-      <TextInput
-        style={styles.textInput}
+    <div style={styles.screen}>
+      <TextField
+        id="standard-basic"
+        label="What are you looking for?"
         value={query}
-        onChangeText={input => setQuery(input)}
-        placeholder="What are you looking for ?"
+        onChange={e => setQuery(e.target.value)}
       />
       {videoSwitch}
       {levelSelect}
-      <View style={styles.buttons}>
-        <Button
-          onPress={addRequestHandler}
-          title="Add"
-          color={Colors.headerBackground}
-        />
-        <Button
-          onPress={() => context.setCurrentScreen("RequestsList")}
-          title="Cancel"
-          color={Colors.headerBackground}
-        />
-      </View>
-    </View>
+      <div style={styles.buttons}>
+        <Button color="secondary" onClick={() => context.setCurrentScreen("RequestsList")}>Cancel</Button>
+        <Button color="primary" onClick={addRequestHandler}>Add Request</Button>
+      </div>
+    </div>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = {
   screen: {
-    // height: "100%",
+    display: "flex",
+    flexDirection: "column",
     height: 200,
     minHeight: "50%",
     padding: "10%",
@@ -107,8 +115,10 @@ const styles = StyleSheet.create({
   },
 
   video: {
+    display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
+    marginRight: "3%"
   },
 
   textInput: {
@@ -117,12 +127,13 @@ const styles = StyleSheet.create({
   },
 
   buttons: {
-    // alignSelf: "center",
+    display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
   },
 
   levelSelect: {
+    display: "flex",
     flexDirection: "row",
     justifyContent: "space-around"
   },
@@ -130,6 +141,5 @@ const styles = StyleSheet.create({
   levelPicker: {
     width: "29%",
     height: 20,
-    // fontSize: 15,
   }
-});
+};

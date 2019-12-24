@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
 import WebContext from "./WebContext";
+import Delete from "@material-ui/icons/Delete";
+
 
 export default function RequestDisplay(props) {
 
   const context = useContext(WebContext);
 
   function detailRequestHandler() {
-    // props.navigation.navigate('RequestContent', { request });
     if (props.downloaded) {
       context.setCurrentScreen("RequestContent");
       context.setCurrentRequest(props.request);
@@ -25,31 +24,26 @@ export default function RequestDisplay(props) {
   }
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.firstColumn}>
-        <TouchableOpacity 
-          style={{ borderBottomColor: "grey", borderBottomWidth: 1 }}
-          onPress={detailRequestHandler}
-        >
-          <Text style={styles.infos}>
-            {props.request.id} / {props.request.mode} / {props.request.status}
-          </Text>
-          <Text style={styles.query}>{props.request.query}</Text>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity onPress={removeRequestHandler}>
-        <Ionicons name="md-trash" size={30} color="pink" />
-      </TouchableOpacity>
-    </View>
+    <div style={styles.screen}>
+      <div style={styles.firstColumn} onClick={detailRequestHandler}>
+        <div style={styles.infos}>
+          {props.request.id} / {props.request.mode} / {props.request.status}
+        </div>
+        <div style={styles.query}>{props.request.query}</div>
+      </div>
+      <div onClick={removeRequestHandler}>
+        <Delete size={30} style={{ color: "pink" }} />
+      </div>
+    </div>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = {
   screen: {
     padding: "1%",
     margin: "2%",
     maxWidth: "90%",
+    display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
@@ -58,6 +52,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginRight: "5%",
     maxWidth: "90%",
+    borderBottomColor: "grey",
+    borderBottomWidth: 1
   },
 
   infos: {
@@ -67,16 +63,15 @@ const styles = StyleSheet.create({
 
   query: {
     fontWeight: "bold",
-    // fontStyle: "italic",
-    marginHorizontal: "2%",
+    marginHorizontal: "2vw",
     fontSize: 16,
     marginVertical: "1%",
-    maxWidth: "100%",
+    maxWidth: "100vw",
   }
 
 
 
-});
+};
 
 
 
